@@ -25,5 +25,5 @@ app.UseRouting();
 app.UseAuthorization();
 app.MapControllerRoute(
 "default",
-"{controller=Home}/{action=Index}/{id?}");
+"{controller=EventCatalog}/{action=Index}/{id?}");
 app.Run();

@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="GloboTicket" type="CompoundRunConfigurationType">
+    <toRun name="GloboTicket.Client" type="LaunchSettings" />
+    <toRun name="GloboTicket.Services.EventCatalog" type="LaunchSettings" />
+    <method v="2" />
+  </configuration>
+</component>
