@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using GloboTicket.Client.Models;
 using GloboTicket.Client.Models.View;
 using GloboTicket.Client.Services;
@@ -9,13 +8,10 @@ namespace GloboTicket.Client.Controllers;
 public class EventCatalogController : Controller
 {
     private readonly IEventCatalogService _eventCatalogService;
-    private readonly Settings _settings;
 
-
-    public EventCatalogController(IEventCatalogService eventCatalogService, Settings settings)
+    public EventCatalogController(IEventCatalogService eventCatalogService)
     {
         _eventCatalogService = eventCatalogService;
-        _settings = settings;
     }
 
     public async Task<ActionResult<EventListViewModel>> Index(Guid categoryId)
@@ -23,7 +19,7 @@ public class EventCatalogController : Controller
         var getCategoriesTask = _eventCatalogService.GetCategories();
         var getEventsTask = categoryId == Guid.Empty ? _eventCatalogService.GetAll() :
             _eventCatalogService.GetByCategoryId(categoryId);
-        await Task.WhenAll(new Task[] {getCategoriesTask, getEventsTask});
+        await Task.WhenAll(getCategoriesTask, getEventsTask);
 
         return View(new EventListViewModel()
         {
