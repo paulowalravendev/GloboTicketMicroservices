@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using GloboTicket.Client.Models;
+using GloboTicket.Client.Models.View;
 
 namespace GloboTicket.Client.Controllers;
 
