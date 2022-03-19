@@ -1,5 +1,5 @@
 using AutoMapper;
-using GloboTicker.Grpc;
+using GloboTicket.Grpc;
 using GloboTicket.Services.EventCatalog.Repositories;
 using Grpc.Core;
 
@@ -31,6 +31,21 @@ public class EventGrpcService : Events.EventsBase
         var response = new GetAllEventsResponse();
         var eventEntities = await _eventRepository.GetEvents(Guid.Parse(request.CategoryId));
         response.Events.Add(_mapper.Map<List<Event>>(eventEntities));
+        return response;
+    }
+
+    public override async Task<GetAllCategoriesResponse> GetAllCategories(GetAllCategoriesRequest request, ServerCallContext context)
+    {
+        var response = new GetAllCategoriesResponse();
+        var categoriesEntities = await _categoryRepository.GetAllCategories();
+        response.Categories.Add(_mapper.Map<List<Category>>(categoriesEntities));
+        return response;
+    }
+    public override async Task<GetByEventIdResponse> GetByEventId(GetByEventIdRequest request, ServerCallContext context)
+    {
+        var response = new GetByEventIdResponse();
+        var @event = await _eventRepository.GetEventById(Guid.Parse(request.EventId));
+        response.Event = _mapper.Map<Event>(@event);
         return response;
     }
 }

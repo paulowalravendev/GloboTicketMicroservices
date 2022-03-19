@@ -1,10 +1,17 @@
 using GloboTicket.Services.EventCatalog.DbContexts;
 using GloboTicket.Services.EventCatalog.Repositories;
 using GloboTicket.Services.EventCatalog.Services;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
+
+builder.WebHost.ConfigureKestrel(options => {
+    // Setup a HTTP/2 endpoint without TLS.
+    options.ListenLocalhost(5001, o => o.Protocols =
+                                HttpProtocols.Http2);
+});
 
 services.AddDbContext<EventCatalogDbContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging();

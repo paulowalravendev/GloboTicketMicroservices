@@ -7,11 +7,21 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.3" />
+        <PackageReference Include="Grpc.Net.Client" Version="2.44.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.3" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.44.0" />
+
     </ItemGroup>
 
     <ItemGroup>
-      <_ContentIncludedByDefault Remove="Views\DisplayTemplates\Event.cshtml" />
+        <_ContentIncludedByDefault Remove="Views\DisplayTemplates\Event.cshtml" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <Protobuf Include="../../protos/eventcatalog.proto" GrpcServices="Client">
+            <Link>Protos/eventCatalog.proto</Link>
+        </Protobuf>
     </ItemGroup>
 
 </Project>

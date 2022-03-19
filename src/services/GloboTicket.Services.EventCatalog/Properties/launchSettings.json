@@ -3,10 +3,15 @@
   "profiles": {
     "GloboTicket.Services.EventCatalog": {
       "commandName": "Project",
-      "applicationUrl": "https://localhost:5001",
+      "applicationUrl": "http://localhost:5001",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    }
+  },
+  "Kestrel": {
+    "EndpointDefaults": {
+      "Protocols": "Http2"
     }
   }
 }

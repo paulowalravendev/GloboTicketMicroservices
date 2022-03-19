@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "GloboTicker.Grpc";
+option csharp_namespace = "GloboTicket.Grpc";
 import "google/protobuf/timestamp.proto";
 
 package API;
@@ -8,19 +8,36 @@ package API;
 service Events {
   rpc GetAll (GetAllEventsRequest) returns (GetAllEventsResponse) {}
   rpc GetAllEventsByCategoryId (GetAllEventsByCategoryIdRequest) returns (GetAllEventsResponse) {}
-//  rpc GetByEventId (GetByEventIdRequest) returns (GetByEventIdResponse) {}
-//  rpc GetAllCategories (GetAllCategoriesRequest) returns (GetAllCategoriesResponse) {}
+  rpc GetByEventId (GetByEventIdRequest) returns (GetByEventIdResponse) {}
+  rpc GetAllCategories (GetAllCategoriesRequest) returns (GetAllCategoriesResponse) {}
 }
 
+// GetAll && GetAllEventsByCategoryId
+//  Requests
 message GetAllEventsRequest {}
+message GetAllEventsByCategoryIdRequest {
+  string CategoryId = 1;
+}
+// Responses
 message GetAllEventsResponse {
   repeated Event Events = 1;
 }
 
-message GetAllEventsByCategoryIdRequest {
-  string CategoryId = 1;
+// GetByEventId
+message GetByEventIdRequest {
+  string EventId = 1;
+}
+message GetByEventIdResponse {
+  Event Event = 1;
 }
 
+// GetAllCategories
+message GetAllCategoriesRequest {}
+message GetAllCategoriesResponse {
+  repeated Category Categories = 1;
+}
+
+// Types
 message Event {
   string EventId = 1;
   string Name = 2;
@@ -31,4 +48,8 @@ message Event {
   string ImageUrl = 7;
   string CategoryId = 8;
   string CategoryName = 9;
+}
+message Category {
+  string CategoryId = 1;
+  string Name = 2;
 }

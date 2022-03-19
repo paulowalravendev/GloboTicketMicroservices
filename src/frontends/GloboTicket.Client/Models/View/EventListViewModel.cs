@@ -1,4 +1,4 @@
-using GloboTicket.Client.Models.Api;
+using GloboTicket.Grpc;
 
 namespace GloboTicket.Client.Models.View;
 

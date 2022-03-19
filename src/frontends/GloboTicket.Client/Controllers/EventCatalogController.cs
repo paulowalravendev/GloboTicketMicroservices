@@ -1,30 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using GloboTicket.Client.Models;
+﻿using GloboTicket.Grpc;
+using Microsoft.AspNetCore.Mvc;
 using GloboTicket.Client.Models.View;
-using GloboTicket.Client.Services;
 
 namespace GloboTicket.Client.Controllers;
 
 public class EventCatalogController : Controller
 {
-    private readonly IEventCatalogService _eventCatalogService;
+    private readonly Events.EventsClient _eventCatalogService;
 
-    public EventCatalogController(IEventCatalogService eventCatalogService)
+    public EventCatalogController(Events.EventsClient eventCatalogService)
     {
         _eventCatalogService = eventCatalogService;
     }
 
     public async Task<ActionResult<EventListViewModel>> Index(Guid categoryId)
     {
-        var getCategoriesTask = _eventCatalogService.GetCategories();
-        var getEventsTask = categoryId == Guid.Empty ? _eventCatalogService.GetAll() :
-            _eventCatalogService.GetByCategoryId(categoryId);
-        await Task.WhenAll(getCategoriesTask, getEventsTask);
+        var getCategoriesAsync = _eventCatalogService.GetAllCategoriesAsync(new GetAllCategoriesRequest {});
+        var getEventsAsync = categoryId == Guid.Empty ?
+            _eventCatalogService.GetAllAsync(new GetAllEventsRequest {}) :
+            _eventCatalogService.GetAllEventsByCategoryIdAsync(new GetAllEventsByCategoryIdRequest {CategoryId = categoryId.ToString()});
+
+        await Task.WhenAll(getCategoriesAsync.ResponseAsync, getEventsAsync.ResponseAsync);
 
         return View(new EventListViewModel()
         {
-            Events = getEventsTask.Result,
-            Categories = getCategoriesTask.Result,
+            Events = getEventsAsync.ResponseAsync.Result.Events,
+            Categories = getCategoriesAsync.ResponseAsync.Result.Categories,
             SelectedCategory = categoryId
         });
     }
@@ -37,7 +38,7 @@ public class EventCatalogController : Controller
 
     public async Task<IActionResult> Detail(Guid eventId)
     {
-        var ev = await _eventCatalogService.GetEvent(eventId);
-        return View(ev);
+        var ev = await _eventCatalogService.GetByEventIdAsync(new GetByEventIdRequest {EventId = eventId.ToString()});
+        return View(ev.Event);
     }
 }
