@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using GloboTicket.Services.EventCatalog.DbContexts;
 using GloboTicket.Services.EventCatalog.Repositories;
 using GloboTicket.Services.EventCatalog.Services;
@@ -7,11 +8,13 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
-builder.WebHost.ConfigureKestrel(options => {
-    // Setup a HTTP/2 endpoint without TLS.
-    options.ListenLocalhost(5001, o => o.Protocols =
-                                HttpProtocols.Http2);
-});
+if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+    builder.WebHost.ConfigureKestrel(options => {
+        var port = new Uri(Environment.GetEnvironmentVariable("ASPNETCORE_URLS")!).Port;
+        // Setup a HTTP/2 endpoint without TLS.
+        options.ListenLocalhost(port, o => o.Protocols =
+                                    HttpProtocols.Http2);
+    });
 
 services.AddDbContext<EventCatalogDbContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging();
