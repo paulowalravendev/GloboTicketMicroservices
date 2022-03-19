@@ -10,6 +10,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{DF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GloboTicket.Services.EventCatalog", "src\services\GloboTicket.Services.EventCatalog\GloboTicket.Services.EventCatalog.csproj", "{BBD25DAF-CC23-4670-A5EE-6E71DFCF9C90}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "protos", "protos", "{BE4F67D4-B5F4-42C0-85B1-0D6136E269DF}"
+	ProjectSection(SolutionItems) = preProject
+		src\protos\eventcatalog.proto = src\protos\eventcatalog.proto
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +25,7 @@ Global
 		{DA0B5BE4-BD74-4F1A-B531-0C427FE30837} = {0C0AC7B0-E023-4C71-945A-AB95F41F75E7}
 		{DF5156A4-ED44-41F1-B079-1EF5506BB7D0} = {B7EC527C-89ED-4E0A-934D-406B71D758ED}
 		{BBD25DAF-CC23-4670-A5EE-6E71DFCF9C90} = {DF5156A4-ED44-41F1-B079-1EF5506BB7D0}
+		{BE4F67D4-B5F4-42C0-85B1-0D6136E269DF} = {B7EC527C-89ED-4E0A-934D-406B71D758ED}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DA0B5BE4-BD74-4F1A-B531-0C427FE30837}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

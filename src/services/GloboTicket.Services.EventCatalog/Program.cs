@@ -1,5 +1,6 @@
 using GloboTicket.Services.EventCatalog.DbContexts;
 using GloboTicket.Services.EventCatalog.Repositories;
+using GloboTicket.Services.EventCatalog.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,7 @@ services.AddScoped<ICategoryRepository, CategoryRepository>();
 services.AddScoped<IEventRepository, EventRepository>();
 services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 services.AddControllers();
+services.AddGrpc();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
@@ -25,4 +27,5 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+app.MapGrpcService<EventGrpcService>();
 app.Run();

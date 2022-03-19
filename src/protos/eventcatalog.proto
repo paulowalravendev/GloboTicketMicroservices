@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+option csharp_namespace = "GloboTicker.Grpc";
+import "google/protobuf/timestamp.proto";
+
+package API;
+
+service Events {
+  rpc GetAll (GetAllEventsRequest) returns (GetAllEventsResponse) {}
+  rpc GetAllEventsByCategoryId (GetAllEventsByCategoryIdRequest) returns (GetAllEventsResponse) {}
+//  rpc GetByEventId (GetByEventIdRequest) returns (GetByEventIdResponse) {}
+//  rpc GetAllCategories (GetAllCategoriesRequest) returns (GetAllCategoriesResponse) {}
+}
+
+message GetAllEventsRequest {}
+message GetAllEventsResponse {
+  repeated Event Events = 1;
+}
+
+message GetAllEventsByCategoryIdRequest {
+  string CategoryId = 1;
+}
+
+message Event {
+  string EventId = 1;
+  string Name = 2;
+  string Price = 3;
+  string Artist = 4;
+  google.protobuf.Timestamp Date = 5;
+  string Description = 6;
+  string ImageUrl = 7;
+  string CategoryId = 8;
+  string CategoryName = 9;
+}
