@@ -19,9 +19,7 @@ public class EventCatalogController : Controller
         var getEventsAsync = categoryId == Guid.Empty ?
             _eventCatalogService.GetAllAsync(new GetAllEventsRequest {}) :
             _eventCatalogService.GetAllEventsByCategoryIdAsync(new GetAllEventsByCategoryIdRequest {CategoryId = categoryId.ToString()});
-
         await Task.WhenAll(getCategoriesAsync.ResponseAsync, getEventsAsync.ResponseAsync);
-
         return View(new EventListViewModel()
         {
             Events = getEventsAsync.ResponseAsync.Result.Events,
